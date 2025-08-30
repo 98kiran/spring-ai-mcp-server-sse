@@ -1,5 +1,6 @@
 package org.spring_ai_mcp_server_sse;
 
+import org.spring_ai_mcp_server_sse.stocks.StockService;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.boot.SpringApplication;
