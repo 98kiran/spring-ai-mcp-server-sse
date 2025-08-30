@@ -21,7 +21,11 @@ public class StockService {
     @Value("${alphaVantage.apiKey:demo}")
     private String apiKey;
 
-    @Tool(description = "Get stock price for a company or ticker symbol. Examples: AAPL, MSFT, TSLA, INFY, RDSA")
+    @Tool(description = """
+        Only call this tool when the user explicitly asks for a stock price/quote,
+        and ONLY if a ticker or clear company name is provided (e.g., AAPL, MSFT, 'price of Tesla').
+        Do NOT call for greetings, chit-chat, or ambiguous requests.
+""")
     public String getStockPrice(String companyOrSymbol) {
         try {
             String symbol = resolveSymbol(companyOrSymbol);
