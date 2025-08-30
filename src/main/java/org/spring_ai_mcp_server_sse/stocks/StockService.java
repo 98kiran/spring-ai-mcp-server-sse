@@ -18,7 +18,7 @@ public class StockService {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
-    @Value("${alphaVantage.apiKey:demo}")
+    @Value("${alphaVantage.apiKey}")
     private String apiKey;
 
     @Tool(description = """
@@ -30,8 +30,10 @@ public class StockService {
         try {
             String symbol = resolveSymbol(companyOrSymbol);
             if (symbol == null) {
+                log.info("Could not resolve symbol for input: " + companyOrSymbol);
                 return "I couldn't find a symbol for \"" + companyOrSymbol + "\".";
             }
+            log.info("Called getStockPrice for symbol: " + symbol);
 
             String json = http.get()
                     .uri(uri -> uri.path("/query")
@@ -44,7 +46,10 @@ public class StockService {
 
             log.info("Response Stock JSON: " + json);
 
-            if (json == null) return "No stock data found for " + symbol + ".";
+            if (json == null) {
+                log.info("No JSON response for symbol: " + symbol);
+                return "No stock data found for " + symbol + ".";
+            }
 
             JsonNode q = mapper.readTree(json).path("Global Quote");
             String price = q.path("05. price").asText(null);
