@@ -2,6 +2,7 @@ package org.spring_ai_mcp_server_sse;
 
 import org.spring_ai_mcp_server_sse.search.BraveSearchService;
 import org.spring_ai_mcp_server_sse.stocks.StockService;
+import org.spring_ai_mcp_server_sse.utils.TimeUtilsService;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.boot.SpringApplication;
@@ -18,13 +19,15 @@ public class SpringAiMcpServerSseApplication {
     @Bean
     public ToolCallbackProvider tools(
             StockService stockService,
-            BraveSearchService braveSearchService
+            BraveSearchService braveSearchService,
+            TimeUtilsService timeUtilsService
     ) {
         return MethodToolCallbackProvider
                 .builder()
                 .toolObjects(
                         stockService,
-                        braveSearchService
+                        braveSearchService,
+                        timeUtilsService
                 )
                 .build();
     }
