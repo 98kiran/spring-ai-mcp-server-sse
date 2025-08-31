@@ -23,19 +23,9 @@ public class BraveSearchService {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
-    // Put this in application.properties: brave.apiKey=${BRAVE_API_KEY}
     @Value("${brave.apiKey}")
     private String apiKey;
 
-    /**
-     * Keep it simple: one-arg tool for natural chat.
-     *
-     * Model usage rules:
-     * - Only call when the user explicitly asks to look something up on the web
-     *   (e.g., "search", "find", "look up", "latest on X", etc.).
-     * - Do NOT call for greetings, small talk, or when the answer is obvious without browsing.
-     * - Default to 5 results, safe & sane params.
-     */
     @Tool(description = """
         Search the web with Brave. Use ONLY when the user asks to look something up online
         (e.g., "search", "find", "look up", "latest on ...").
